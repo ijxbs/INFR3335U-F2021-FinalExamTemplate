@@ -9,14 +9,17 @@ public class ThirdPersonMovement : MonoBehaviour
     public float grav = 9.81f;
     public float jumpSpeed = 3f;
     public float dirY;
+
+    public Joystick joystick;
+
     
 
     // Update is called once per frame
     void Update()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal, 0f, vertical);
+        float horizontal = joystick.Horizontal;
+        float vertical = joystick.Vertical;
+        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         if (controller.isGrounded)
         {
@@ -25,6 +28,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 dirY = jumpSpeed;
             }
         }
+
         dirY -= grav * Time.deltaTime;
 
         direction.y = dirY;
